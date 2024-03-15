@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="$(arg robot_model)_robot">
+  <!--
+    这是一个顶级xacro，实例化了专门用于Gazebo的'ur_robot'宏（即：'ur_robot_gazebo'），并为其所有必需的参数传递了值。
+    这个文件应该被视为ur_description包中同名文件的Gazebo特定变体。它接受相同的参数，但不是为真实机器人配置一切，而是生成一个带有ros_control硬件接口的Gazebo兼容URDF。
+    仅当您计划在Gazebo中'单独'生成机器人时，才使用这个顶级xacro，而不附加任何夹持器或任何其他几何体。
+    如果您需要附加末端执行器、相机或需要将机器人集成到更大的工作单元中，并希望将其作为Gazebo中的单一实体生成，不要编辑此文件。
+    相反：创建一个新的顶级xacro，给它一个合适的名称，包括所需的'.xacro'文件，实例化模型（即：调用宏）并通过添加适当的关节来连接一切。
+  -->
+
+
+  <!--
+    导入主宏。这个宏包装了真实机器人的模型，并添加了Gazebo所需的所有元素和参数。
+    注意：这里导入的是Gazebo包装器的主宏，而不是常规的xacro宏（后者由ur_description托管）。
+  -->
+  <xacro:include filename="$(find ur_gripper_gazebo)/urdf/ur_macro.xacro"/>
+  <xacro:include filename="$(find robotiq_85_description)/urdf/robotiq_85_gripper.urdf.xacro" />
+  <!--声明参数 -->
+  <xacro:arg name="joint_limit_params" default=""/>
+  <xacro:arg name="physical_params" default=""/>
+  <xacro:arg name="kinematics_params" default=""/>
+  <xacro:arg name="visual_params" default=""/>
+
+  <!--
+    合法的值包括：
+      - hardware_interface/PositionJointInterface
+      - hardware_interface/VelocityJointInterface
+      - hardware_interface/EffortJointInterface
+
+    注意：这个值必须与'config'目录下controller .yaml文件中配置的控制器相对应。
+  -->
+  <xacro:arg name="transmission_hw_interface" default="hardware_interface/EffortJointInterface"/>
+  <xacro:arg name="safety_limits" default="false"/>
+  <xacro:arg name="safety_pos_margin" default="0.15"/>
+  <xacro:arg name="safety_k_position" default="20"/>
+
+  <!-- 实例化 Gazebo 机器人并向其传递所有必需的参数。 -->
+  <xacro:ur_robot_gazebo
+    prefix=""
+    joint_limits_parameters_file="$(arg joint_limit_params)"
+    kinematics_parameters_file="$(arg kinematics_params)"
+    physical_parameters_file="$(arg physical_params)"
+    visual_parameters_file="$(arg visual_params)"
+    transmission_hw_interface="$(arg transmission_hw_interface)"
+    safety_limits="$(arg safety_limits)"
+    safety_pos_margin="$(arg safety_pos_margin)"
+    safety_k_position="$(arg safety_k_position)"
+  />
+  <xacro:robotiq_85_gripper prefix="" parent="wrist_3_link" >
+      <origin xyz="0 0 0" rpy="0 -1.5708 0"/>
+  </xacro:robotiq_85_gripper>
+  <!--
+    将Gazebo模型附加到Gazebo的世界坐标系。
+    注意：如果您希望将UR集成到更大的场景中，并需要添加EEF或其他部分，请不要修改这个文件或这里的'world'链接。请创建一个新的xacro，然后决定是否需要在那里添加一个'world'链接。
+  -->
+  <link name="world"/>
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 1" rpy="0 0 0"/>
+  </joint>
+
+  <link name="tool0_controller"/>
+  <joint name="tool_controller_fake_joint" type="fixed">
+    <parent link="tool0"/>
+    <child link="tool0_controller"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+
+
+</robot>
