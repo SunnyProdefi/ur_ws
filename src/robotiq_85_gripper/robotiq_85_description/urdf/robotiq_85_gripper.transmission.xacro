@@ -16,31 +16,31 @@
         
         <gazebo>
                 <!-- 加载插件：模仿关节现在可以在 Gazebo 中使用 -->
-            <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_1">
+            <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_1">
                 <joint>${prefix}robotiq_85_left_knuckle_joint</joint>
                 <mimicJoint>${prefix}robotiq_85_right_knuckle_joint</mimicJoint>
                 <!--multiplier>1.0</multiplier>
                 <offset>0.0</offset-->
             </plugin>
-            <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_2">
+            <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_2">
                 <joint>${prefix}robotiq_85_left_knuckle_joint</joint>
                 <mimicJoint>${prefix}robotiq_85_left_inner_knuckle_joint</mimicJoint>
                 <!--multiplier>1.0</multiplier>
                 <offset>0.0</offset-->
             </plugin>
-            <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_3">
+            <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_3">
                 <joint>${prefix}robotiq_85_left_knuckle_joint</joint>
                 <mimicJoint>${prefix}robotiq_85_right_inner_knuckle_joint</mimicJoint>
                 <!--multiplier>1.0</multiplier>
                 <offset>0.0</offset-->
             </plugin>
-            <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_4">
+            <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_4">
                 <joint>${prefix}robotiq_85_left_knuckle_joint</joint>
                 <mimicJoint>${prefix}robotiq_85_left_finger_tip_joint</mimicJoint>
                 <multiplier>-1.0</multiplier>
                 <offset>0.0</offset>
             </plugin>
-            <plugin filename="libroboticsgroup_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_5">
+            <plugin filename="libroboticsgroup_upatras_gazebo_mimic_joint_plugin.so" name="${prefix}mimic_robotiq_85_5">
                 <joint>${prefix}robotiq_85_left_knuckle_joint</joint>
                 <mimicJoint>${prefix}robotiq_85_right_finger_tip_joint</mimicJoint>
                 <multiplier>-1.0</multiplier>
