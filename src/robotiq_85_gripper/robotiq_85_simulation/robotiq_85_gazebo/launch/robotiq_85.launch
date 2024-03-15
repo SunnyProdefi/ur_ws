@@ -4,17 +4,17 @@
   <arg name="paused" default="false"/>
   <arg name="gui" default="true"/>
   
-  <!-- startup simulated world -->
+  <!-- 启动模拟世界 -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" default="worlds/empty.world"/>
     <arg name="paused" value="$(arg paused)"/>
     <arg name="gui" value="$(arg gui)"/>
   </include>
 
-  <!-- send robot urdf to param server -->
+  <!-- 将机器人 urdf 发送到参数服务器 -->
   <include file="$(find robotiq_85_description)/launch/upload_robotiq_85_gripper.launch"/>
 
-  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <!-- 将 robots_description 推送到工厂并在Gazebo中生成机器人 -->
   <node name="spawn_gazebo_model" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model robot" respawn="false" output="screen" />
 
   <include file="$(find robotiq_85_gazebo)/launch/controller_utils.launch"/>
