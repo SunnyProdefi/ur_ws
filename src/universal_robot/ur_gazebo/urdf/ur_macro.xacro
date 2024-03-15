@@ -1,29 +1,14 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <!--
-    Main xacro macro definition of the "Gazebo robot" model.
-
-    This wraps the model of the real robot and adds all elements and parameters
-    required by Gazebo.
-
-    It also adds the gazebo_ros_control plugin.
-
-    NOTE: this is NOT a URDF. It cannot directly be loaded by consumers
-    expecting a flattened '.urdf' file. See the top-level '.xacro' for that
-    (but note: that .xacro must still be processed by the xacro command).
-
-    For use in '.launch' files: use one of the 'load_urX.launch' convenience
-    launch files.
-
-    NOTE: this Gazebo model makes use of the same set of parameter files as the
-    main xacro macro (in ur_description). It is therefor possible to use the
-    kinematic calibration exported from a REAL UR robot. Please refer to the
-    ur_macro.xacro in ur_description for more information about this.
-
-    Main author of the migration to yaml configs: Ludovic Delval.
-
-    Contributors to previous versions (in no particular order):
-
+    "Gazebo机器人"模型的主要xacro宏定义。
+    这个宏包装了真实机器人的模型，并添加了Gazebo所需的所有元素和参数。
+    它还添加了gazebo_ros_control插件。
+    注意：这不是一个URDF文件。它不能直接被期望加载扁平化的'.urdf'文件的使用者所使用。请参考顶级的'.xacro'文件（但请注意：该.xacro仍然必须通过xacro命令进行处理）。
+    用于'.launch'文件的使用：使用其中一个'load_urX.launch'方便的启动文件。
+    注意：这个Gazebo模型使用与主xacro宏（在ur_description中）相同的一组参数文件。因此，可以使用从真实UR机器人导出的运动学校准。有关此信息，请参阅ur_description中的ur_macro.xacro。
+    迁移到yaml配置的主要作者：Ludovic Delval。
+    贡献者（按无特定顺序）：
      - Felix Messmer
      - Kelsey Hawkins
      - Shaun Edwards
@@ -39,7 +24,7 @@
   -->
 
 
-  <!-- Definition of the main macro -->
+  <!-- 主宏定义 -->
   <xacro:macro name="ur_robot_gazebo" params="
    prefix
    joint_limits_parameters_file
@@ -49,17 +34,14 @@
    transmission_hw_interface:=hardware_interface/EffortJointInterface
    safety_limits:=false safety_pos_margin:=0.15 safety_k_position:=20"
   >
-    <!--
-      Import the xacro macro for the REAL robot (which we'll augment with Gazebo
-      specific elements in the wrapper macro below).
-
-      NOTE: this imports the '_macro.xacro' from ur_description, as that contains
-      the definitions for the real robot.
-    -->
+  <!--
+    导入REAL机器人的xacro宏（我们将在下面的包装器宏中用Gazebo特定元素来增强它）。
+    注意：这里从ur_description导入了'_macro.xacro'，因为它包含了真实机器人的定义。
+  -->
   <xacro:include filename="$(find ur_description)/urdf/inc/ur_macro.xacro"/>
 
 
-    <!-- Instantiate model for the REAL robot. -->
+    <!-- 实例化真实机器人的模型。 -->
     <xacro:ur_robot
       prefix="${prefix}"
       joint_limits_parameters_file="${joint_limits_parameters_file}"
@@ -72,7 +54,7 @@
       safety_k_position="${safety_k_position}"
     />
 
-    <!-- Configure self collision properties per link -->
+    <!-- 配置每个链接的自碰撞属性 -->
     <gazebo reference="${prefix}shoulder_link">
       <selfCollide>true</selfCollide>
     </gazebo>
@@ -96,8 +78,8 @@
     </gazebo>
 
     <!--
-      Inject Gazebo ROS Control plugin, which allows us to use ros_control
-      controllers to control the virtual robot hw.
+      注入Gazebo ROS Control插件，它允许我们使用ros_control
+      控制器来控制虚拟机器人硬件。
     -->
     <gazebo>
       <plugin name="ros_control" filename="libgazebo_ros_control.so">

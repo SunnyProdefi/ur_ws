@@ -1,56 +1,35 @@
 <?xml version="1.0"?>
 <launch>
-  <!--
-    Main entry point for loading a single UR5 into Gazebo, in isolation, in the
-    empty world.
+<!--
+  加载单个UR5到Gazebo中的主入口点，将其孤立放置在空的世界中。
+  一组类似于ur_robot_driver加载的ros_control控制器将由'ur_control.launch.xml'加载（注意：是*相似的*，*不是*完全相同）。
+  这个启动.launch文件故意被赋予与ur_robot_driver包中的文件相同的名称，因为它扮演着类似的角色：加载配置并启动必要的ROS节点，最终提供一个对Universal Robots UR5的ROS API。但在这种情况下，使用的是Gazebo中的虚拟模型，而不是真实的机器人。
+  注意1：因为这不是一个真实的机器人，模拟的忠实度有限。动态行为会与真实的机器人不同。只支持部分主题、动作和服务。特别是，不支持与控制盒本身的互动，因为Gazebo不模拟控制盒。这意味着：没有仪表板服务器，没有URScript主题，没有力-扭矩传感器等等。
+  注意2：希望将UR5与其他模型集成到更复杂的模拟中的用户不应修改此文件。相反，如果希望将此文件重用于自定义模拟，他们应该创建一个副本并更新这个副本以适应所需的变化。
+  在这些情况下，将此文件视为一个示例，展示了一种*可能的*方式，来启动UR机器人的Gazebo模拟。没有必要完全模仿这种设置。
+-->
 
-    A set of ros_control controllers similar to those loaded by ur_robot_driver
-    will be loaded by 'ur_control.launch.xml' (note: *similar*, *not* identical).
-
-    This bringup .launch file is intentionally given the same name as the one in
-    the ur_robot_driver package, as it fulfills a similar role: loading the
-    configuration and starting the necessary ROS nodes which in the end provide
-    a ROS API to a Universal Robots UR5. Only in this case, instead of a real
-    robot, a virtual model in Gazebo is used.
-
-    NOTE 1: as this is not a real robot, there are limits to the faithfulness
-    of the simulation. Dynamic behaviour will be different from a real robot.
-    Only a subset of topics, actions and services is supported. Specifically,
-    interaction with the Control Box itself is not supported, as Gazebo does not
-    simulate a Control Box. This means: no Dashboard server, no URScript topic
-    and no force-torque sensor among other things.
-
-    NOTE 2: users wishing to integrate a UR5 with other models into a more
-    complex simulation should NOT modify this file. Instead, if it would be
-    desirable to reuse this file with a custom simulation, they should create a
-    copy and update this copy so as to accomodate required changes.
-
-    In those cases, treat this file as an example, showing one way how a Gazebo
-    simulation for UR robots *could* be launched. It is not necessary to mimic
-    this setup completely.
-  -->
-
-  <!--Robot description and related parameter files -->
+  <!--机器人描述及相关参数文件 -->
   <arg name="robot_description_file" default="$(dirname)/inc/load_ur5.launch.xml" doc="Launch file which populates the 'robot_description' parameter."/>
   <arg name="joint_limit_params" default="$(find ur_description)/config/ur5/joint_limits.yaml"/>
   <arg name="kinematics_params" default="$(find ur_description)/config/ur5/default_kinematics.yaml"/>
   <arg name="physical_params" default="$(find ur_description)/config/ur5/physical_parameters.yaml"/>
   <arg name="visual_params" default="$(find ur_description)/config/ur5/visual_parameters.yaml"/>
 
-  <!-- Controller configuration -->
+  <!-- 控制器配置 -->
   <arg name="controller_config_file" default="$(find ur_gazebo)/config/ur5_controllers.yaml" doc="Config file used for defining the ROS-Control controllers."/>
   <arg name="controllers" default="joint_state_controller eff_joint_traj_controller" doc="Controllers that are activated by default."/>
   <arg name="stopped_controllers" default="joint_group_eff_controller" doc="Controllers that are initally loaded, but not started."/>
 
-  <!-- robot_state_publisher configuration -->
+  <!-- robots_state_publisher配置 -->
   <arg name="tf_prefix" default="" doc="tf_prefix used for the robot."/>
   <arg name="tf_pub_rate" default="125" doc="Rate at which robot_state_publisher should publish transforms."/>
 
-  <!-- Gazebo parameters -->
+  <!-- Gazebo参数 -->
   <arg name="paused" default="false" doc="Starts Gazebo in paused mode" />
   <arg name="gui" default="true" doc="Starts Gazebo gui" />
 
-  <!-- Load urdf on the parameter server -->
+  <!-- 在参数服务器上加载urdf -->
   <include file="$(arg robot_description_file)">
     <arg name="joint_limit_params" value="$(arg joint_limit_params)"/>
     <arg name="kinematics_params" value="$(arg kinematics_params)"/>
@@ -64,7 +43,7 @@
     <param name="tf_prefix" value="$(arg tf_prefix)" />
   </node>
 
-  <!-- Start the 'driver' (ie: Gazebo in this case) -->
+  <!-- 启动“驱动程序”（即本例中的 Gazebo） -->
   <include file="$(dirname)/inc/ur_control.launch.xml">
     <arg name="controller_config_file" value="$(arg controller_config_file)"/>
     <arg name="controllers" value="$(arg controllers)"/>

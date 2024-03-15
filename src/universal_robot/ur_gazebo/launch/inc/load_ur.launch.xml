@@ -1,21 +1,14 @@
 <?xml version="1.0"?>
 <launch>
-  <!-- Load the top-level (ie: stand-alone and complete) xacro for the UR
-       variant defined by the set of yaml parameter files (so to load a UR5
-       onto the ROS parameter server, provide paths to the .yaml files which
-       contain the limits, kinematics, physical and visual parameters which
-       together describe a UR5 robot).
+  <!--
+    加载顶级（即：独立且完整的）xacro以定义通过一组yaml参数文件确定的UR变体
+    （因此，要将UR5加载到ROS参数服务器上，请提供包含限制、运动学、物理和视觉参数的.yaml文件的路径，这些参数共同描述了一个UR5机器人）。
 
-       NOTE: users will typically want to use use one of the other .launch files
-       in this directory (ie: 'load_urXXX.launch'), as those already contain
-       appropriate default values for the required arguments for the various
-       supported robots.
+    注意：用户通常会想要使用此目录中的其他.launch文件（即：'load_urXXX.launch'），
+          因为这些文件已经包含了各种支持机器人所需参数的适当默认值。
 
-       NOTE2: if you have a custom robot configuration, or your robot is
-       integrated into a work cell, do NOT change this file or add all of the
-       work cell objects to the ur.xacro file. Create a new top-level xacro and
-       include the ur_macro.xacro file into it. Then write a new .launch file
-       to load it onto the parameter server.
+    注意2：如果您有一个自定义的机器人配置，或者您的机器人集成到了一个工作单元中，不要更改此文件或将所有工作单元对象添加到ur.xacro文件中。
+          创建一个新的顶级xacro并将ur_macro.xacro文件包含进去。然后编写一个新的.launch文件将其加载到参数服务器上。
   -->
 
   <arg name="robot_model" doc="Type/series of used UR robot (ur3, ur3e, ur5, ur5e, ur10, ur10e, ur16e, ur20)" />
