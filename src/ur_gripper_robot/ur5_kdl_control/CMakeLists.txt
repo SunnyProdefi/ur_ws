@@ -15,6 +15,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   tf
   tf_conversions
+  interactive_markers
+  trac_ik_lib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -106,8 +108,11 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+include_directories(/usr/local/include)
+
 catkin_package(
 #  INCLUDE_DIRS include
+   INCLUDE_DIRS include /usr/local/include
 #  LIBRARIES ur5_kdl_control
 #  CATKIN_DEPENDS gazebo_ros moveit_core moveit_ros_planning_interface roscpp rospy
 #  DEPENDS system_lib
