@@ -75,26 +75,26 @@
   <joint name="world_joint" type="fixed">
     <parent link="world"/>
     <child link="ur5_1_base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 1" rpy="0 0 0"/>
   </joint>
   <joint name="world_joint_2" type="fixed">
     <parent link="world"/>
     <child link="ur5_2_base_link"/>
-    <origin xyz="2 0 0" rpy="0 0 3.1415"/> <!-- 为第二个机器人设置不同的位置 -->
+    <origin xyz="0 1 1" rpy="0 0 3.1415"/> <!-- 为第二个机器人设置不同的位置 -->
   </joint>
 
   <link name="tool0_controller_1"/>
   <joint name="tool_controller_fake_joint_1" type="fixed">
     <parent link="ur5_1_tool0"/>
     <child link="tool0_controller_1"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
   </joint>
 
   <link name="tool0_controller_2"/>
   <joint name="tool_controller_fake_joint_2" type="fixed">
     <parent link="ur5_2_tool0"/>
     <child link="tool0_controller_2"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 0.2" rpy="0 0 0"/>
   </joint>
   
 </robot>

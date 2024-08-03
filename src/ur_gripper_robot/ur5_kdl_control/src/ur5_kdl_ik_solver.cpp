@@ -1,23 +1,24 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <interactive_markers/interactive_marker_server.h>
 #include <interactive_markers/menu_handler.h>
-#include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/chainiksolverpos_lma.hpp>
-#include <kdl/chainiksolverpos_nr_jl.hpp>
-#include <kdl_parser/kdl_parser.hpp>
 #include <ros/ros.h>
 #include <sensor_msgs/JointState.h>
 #include <tf/tf.h>
 #include <tf_conversions/tf_kdl.h>
-#include <trac_ik/trac_ik.hpp>
 #include <trajectory_msgs/JointTrajectory.h>
 #include <trajectory_msgs/JointTrajectoryPoint.h>
 #include <visualization_msgs/InteractiveMarker.h>
 #include <visualization_msgs/InteractiveMarkerControl.h>
 #include <visualization_msgs/InteractiveMarkerFeedback.h>
 
+#include <kdl/chainfksolverpos_recursive.hpp>
+#include <kdl/chainiksolverpos_lma.hpp>
+#include <kdl/chainiksolverpos_nr_jl.hpp>
+#include <kdl_parser/kdl_parser.hpp>
+#include <trac_ik/trac_ik.hpp>
+
 class UR5IKSolver {
-private:
+ private:
   KDL::Chain chain;
   boost::shared_ptr<KDL::ChainFkSolverPos_recursive> fk_solver;
   boost::shared_ptr<KDL::ChainIkSolverPos_LMA> ik_solver;
@@ -30,7 +31,7 @@ private:
   interactive_markers::MenuHandler menu_handler;
   bool use_trac_ik = true;
 
-public:
+ public:
   UR5IKSolver() {
     KDL::Tree tree;
     std::string robot_desc_string;
@@ -49,7 +50,7 @@ public:
 
     trac_ik_solver.reset(new TRAC_IK::TRAC_IK(
         base_link, tip_link, "/robot_description", timeout, error,
-        TRAC_IK::Speed)); // 使用TRAC-IK求解器
+        TRAC_IK::Speed));  // 使用TRAC-IK求解器
 
     fk_solver.reset(new KDL::ChainFkSolverPos_recursive(chain));
     ik_solver.reset(new KDL::ChainIkSolverPos_LMA(chain));
@@ -72,11 +73,12 @@ public:
     // 遍历接收到的关节状态
     for (size_t i = 0; i < msg->name.size(); ++i) {
       if (msg->name[i] !=
-          "robotiq_85_left_knuckle_joint") { // 忽略这个特定的关节
+          "robotiq_85_left_knuckle_joint") {  // 忽略这个特定的关节
         if (joint_index_map.find(msg->name[i]) !=
-            joint_index_map.end()) { // 如果这个关节在KDL链中
-          int idx = joint_index_map[msg->name[i]]; // 获取在KDL链中的索引
-          current_joint_positions(idx) = msg->position[i]; // 更新对应关节的位置
+            joint_index_map.end()) {  // 如果这个关节在KDL链中
+          int idx = joint_index_map[msg->name[i]];  // 获取在KDL链中的索引
+          current_joint_positions(idx) =
+              msg->position[i];  // 更新对应关节的位置
         }
       }
     }
@@ -91,14 +93,12 @@ public:
     KDL::Frame goal_frame;
     tf::poseMsgToKDL(goal_pose.pose, goal_frame);
     if (use_trac_ik) {
-
       // 使用TRAC-IK求解器进行逆运动学求解
       KDL::Twist tolerances = KDL::Twist::Zero();
       return trac_ik_solver->CartToJnt(current_joint_positions, goal_frame,
                                        result, tolerances) >= 0;
 
     } else {
-
       return ik_solver->CartToJnt(current_joint_positions, goal_frame,
                                   result) >= 0;
     }
@@ -132,10 +132,10 @@ public:
           point.positions.push_back(result.data[i]);
         }
 
-        point.time_from_start = ros::Duration(1.0); // 设置这个点的持续时间
+        point.time_from_start = ros::Duration(1.0);  // 设置这个点的持续时间
         traj.points.push_back(point);
 
-        joint_traj_pub.publish(traj); // 发布轨迹
+        joint_traj_pub.publish(traj);  // 发布轨迹
       } else {
         ROS_ERROR("Failed to update IK from Interactive Marker");
       }
@@ -149,7 +149,7 @@ public:
     int_marker.pose.position.x = 0.3;
     int_marker.pose.position.y = -0.2;
     int_marker.pose.position.z = 0.5;
-    int_marker.scale = 0.2; // 设置整体尺度，这也会影响球体大小
+    int_marker.scale = 0.2;  // 设置整体尺度，这也会影响球体大小
 
     int_marker.name = "tool0_6dof";
     int_marker.description = "6-DOF Control for tool0";
@@ -158,17 +158,17 @@ public:
     visualization_msgs::InteractiveMarkerControl sphere_control;
     sphere_control.always_visible = true;
     sphere_control.interaction_mode =
-        visualization_msgs::InteractiveMarkerControl::NONE;
+        visualization_msgs::InteractiveMarkerControl::MOVE_ROTATE_3D;
 
     visualization_msgs::Marker sphere_marker;
     sphere_marker.type = visualization_msgs::Marker::SPHERE;
-    sphere_marker.scale.x = 0.2; // 球体的直径
+    sphere_marker.scale.x = 0.2;  // 球体的直径
     sphere_marker.scale.y = 0.2;
     sphere_marker.scale.z = 0.2;
-    sphere_marker.color.r = 0.0;
-    sphere_marker.color.g = 1.0;
-    sphere_marker.color.b = 0.0;
-    sphere_marker.color.a = 0.5; // 半透明
+    sphere_marker.color.r = 0.5;
+    sphere_marker.color.g = 0.5;
+    sphere_marker.color.b = 0.5;
+    sphere_marker.color.a = 0.8;  // 半透明
 
     sphere_control.markers.push_back(sphere_marker);
     int_marker.controls.push_back(sphere_control);

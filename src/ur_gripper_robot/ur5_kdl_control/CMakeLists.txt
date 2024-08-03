@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf_conversions
   interactive_markers
   trac_ik_lib
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -145,6 +146,8 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/ur5_kdl_control_node.cpp)
 add_executable(ur5_kdl_ik_solver src/ur5_kdl_ik_solver.cpp)
 target_link_libraries(ur5_kdl_ik_solver ${catkin_LIBRARIES})
+add_executable(dual_ur5_ik_solver src/dual_ur5_ik_solver.cpp)
+target_link_libraries(dual_ur5_ik_solver ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
