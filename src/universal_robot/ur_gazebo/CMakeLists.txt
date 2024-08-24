@@ -35,40 +35,40 @@ include_directories(
 
 catkin_package()
 
-add_executable(effort_pub src/effort_pub.cpp)
-target_link_libraries(effort_pub ${catkin_LIBRARIES})
+# add_executable(effort_pub src/effort_pub.cpp)
+# target_link_libraries(effort_pub ${catkin_LIBRARIES})
 
-add_executable(te_tw src/te_tw.cpp)
-# 确保将 Pinocchio 库链接到 te_tw 目标
-target_link_libraries(te_tw ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
+# add_executable(te_tw src/te_tw.cpp)
+# # 确保将 Pinocchio 库链接到 te_tw 目标
+# target_link_libraries(te_tw ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
 
-add_executable(effort_gazebo src/effort_gazebo.cpp)
+# add_executable(effort_gazebo src/effort_gazebo.cpp)
+# # 确保将 Pinocchio 库链接到 effort_gazebo 目标
+# target_link_libraries(effort_gazebo ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
+
+# add_executable(FK src/FK.cpp)
+# # 确保将 Pinocchio 库链接到 effort_gazebo 目标
+# target_link_libraries(FK ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
+
+# add_executable(ik src/ik.cpp)
+# # 确保将 Pinocchio 库链接到 effort_gazebo 目标
+# target_link_libraries(ik ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
+
+# add_executable(wrench_generate src/wrench_generate.cpp)
+# # 确保将 Pinocchio 库链接到 effort_gazebo 目标
+# target_link_libraries(wrench_generate ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
+
+# add_executable(back_to_start src/back_to_start.cpp)
+# # 确保将 Pinocchio 库链接到 effort_gazebo 目标
+# target_link_libraries(back_to_start ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES} ${actionlib_LIBRARIES})
+
+# add_executable(rrt src/rrt.cpp)
+# # 确保将 Pinocchio 库链接到 effort_gazebo 目标
+# target_link_libraries(rrt ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES} ${actionlib_LIBRARIES} ${orocos_kdl_LIBRARIES} ${FCL_LIBRARIES} ${kdl_parser_LIBRARIES} ${urdf_LIBRARIES} ) 
+
+add_executable(path_planning src/path_planning.cpp src/rrt.cpp)
 # 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(effort_gazebo ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
-
-add_executable(FK src/FK.cpp)
-# 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(FK ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
-
-add_executable(ik src/ik.cpp)
-# 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(ik ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
-
-add_executable(wrench_generate src/wrench_generate.cpp)
-# 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(wrench_generate ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES})
-
-add_executable(back_to_start src/back_to_start.cpp)
-# 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(back_to_start ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES} ${actionlib_LIBRARIES})
-
-add_executable(rrt src/rrt.cpp)
-# 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(rrt ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES} ${actionlib_LIBRARIES} ${orocos_kdl_LIBRARIES} ${FCL_LIBRARIES} ${kdl_parser_LIBRARIES} ${urdf_LIBRARIES} ) 
-
-add_executable(path_planning src/path_planning.cpp)
-# 确保将 Pinocchio 库链接到 effort_gazebo 目标
-target_link_libraries(path_planning ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES} ${actionlib_LIBRARIES} ${orocos_kdl_LIBRARIES} ${FCL_LIBRARIES} ${kdl_parser_LIBRARIES} ${urdf_LIBRARIES} )
+target_link_libraries(path_planning ${catkin_LIBRARIES} ${PINOCCHIO_LIBRARIES} ${actionlib_LIBRARIES} ${orocos_kdl_LIBRARIES} ${FCL_LIBRARIES} ${kdl_parser_LIBRARIES} ${urdf_LIBRARIES})
 
 if (CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
