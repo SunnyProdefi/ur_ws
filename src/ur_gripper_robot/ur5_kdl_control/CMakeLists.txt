@@ -135,12 +135,14 @@ include_directories(
 ## 使用 catkin_make，所有包都在单一的 CMake 上下文中构建
 ## 推荐的前缀可确保跨包的目标名称不会冲突
 # add_executable(${PROJECT_NAME}_node src/ur5_kdl_control_node.cpp)
-add_executable(ur5_kdl_ik_solver src/ur5_kdl_ik_solver.cpp 
-  src/dualarm_ik.cpp
+add_executable(ur5_kdl_ik_solver 
+  src/ur5_kdl_ik_solver.cpp
+  src/ur5_ik_solver.cpp
 )
 target_link_libraries(ur5_kdl_ik_solver ${catkin_LIBRARIES})
-add_executable(dual_ur5_ik_solver src/dual_ur5_ik_solver.cpp
-  src/dualarm_ik.cpp
+add_executable(dual_ur5_ik_solver 
+  src/dual_ur5_ik_solver.cpp
+  src/ur5_ik_solver.cpp
 )
 target_link_libraries(dual_ur5_ik_solver ${catkin_LIBRARIES})
 

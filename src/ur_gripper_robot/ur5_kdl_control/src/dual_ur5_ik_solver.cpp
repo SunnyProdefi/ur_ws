@@ -1,6 +1,4 @@
-#include "dualarm_ik.h"
-#include <trajectory_msgs/JointTrajectory.h>
-#include <trajectory_msgs/JointTrajectoryPoint.h>
+#include "ur5_ik_solver.h"
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "ur5_kdl_ik_solver");
