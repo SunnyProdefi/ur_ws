@@ -112,7 +112,6 @@ find_package(catkin REQUIRED COMPONENTS
 include_directories(/usr/local/include)
 
 catkin_package(
-#  INCLUDE_DIRS include
    INCLUDE_DIRS include /usr/local/include
 #  LIBRARIES ur5_kdl_control
 #  CATKIN_DEPENDS gazebo_ros moveit_core moveit_ros_planning_interface roscpp rospy
@@ -126,7 +125,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -144,9 +143,15 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/ur5_kdl_control_node.cpp)
-add_executable(ur5_kdl_ik_solver src/ur5_kdl_ik_solver.cpp)
+add_executable(ur5_kdl_ik_solver 
+  src/ur5_kdl_ik_solver.cpp
+  src/ur5_ik_solver.cpp
+)
 target_link_libraries(ur5_kdl_ik_solver ${catkin_LIBRARIES})
-add_executable(dual_ur5_ik_solver src/dual_ur5_ik_solver.cpp)
+add_executable(dual_ur5_ik_solver 
+  src/dual_ur5_ik_solver.cpp
+  src/ur5_ik_solver.cpp
+)
 target_link_libraries(dual_ur5_ik_solver ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
