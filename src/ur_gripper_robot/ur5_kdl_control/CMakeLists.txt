@@ -18,6 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
   interactive_markers
   trac_ik_lib
   geometry_msgs
+  actionlib
+  trajectory_msgs
+  control_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -158,6 +161,13 @@ add_executable(my_tf_listener
   src/my_tf_listener.cpp
 )
 target_link_libraries(my_tf_listener ${catkin_LIBRARIES})
+
+
+add_executable(move_ur5_arms_to_zero src/move_ur5_arms_to_zero.cpp)
+
+target_link_libraries(move_ur5_arms_to_zero
+  ${catkin_LIBRARIES}
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
