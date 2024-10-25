@@ -146,6 +146,15 @@ add_executable(dual_ur5_ik_solver
 )
 target_link_libraries(dual_ur5_ik_solver ${catkin_LIBRARIES})
 
+add_executable(ik_test 
+  src/ik_test.cpp
+  src/ur5_dh_params.cpp
+  src/math_utils.cpp
+  src/inverse_kinematics.cpp
+  src/forward_kinematics.cpp
+)
+target_link_libraries(ur5_kdl_ik_solver ${catkin_LIBRARIES})
+
 ## 重命名无前缀的 C++ 可执行文件
 ## 上述推荐的前缀会导致目标名称过长，以下将目标重命名回较短的版本，便于用户使用
 ## 例如，使用 "rosrun someones_pkg node" 而不是 "rosrun someones_pkg someones_pkg_node"
