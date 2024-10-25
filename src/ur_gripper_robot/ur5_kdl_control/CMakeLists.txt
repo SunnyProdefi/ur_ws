@@ -154,6 +154,11 @@ add_executable(dual_ur5_ik_solver
 )
 target_link_libraries(dual_ur5_ik_solver ${catkin_LIBRARIES})
 
+add_executable(my_tf_listener 
+  src/my_tf_listener.cpp
+)
+target_link_libraries(my_tf_listener ${catkin_LIBRARIES})
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
